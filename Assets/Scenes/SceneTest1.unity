@@ -1021,6 +1021,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fVitesse: 1
+  fSensibiliteRegard: 3
+  fSensibiliteCamera: 2
 --- !u!114 &2084202075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1033,3 +1035,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7f8e4752c1ac24180b5b47a6f9cf68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camJoueur: {fileID: 1476908555}
