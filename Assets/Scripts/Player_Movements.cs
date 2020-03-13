@@ -4,6 +4,8 @@
 public class Player_Movements : MonoBehaviour
 {
     private Vector3 vecVelocite; // vec et pas v pour avoir un nom différent de sa référence.
+    private Vector3 vecRotation;
+
     private Rigidbody rb;
 
     private void Start()
@@ -16,9 +18,15 @@ public class Player_Movements : MonoBehaviour
         vecVelocite = vVelocite;
     }
 
+    public void Rotation(Vector3 vRotation)
+    {
+        vecRotation = vRotation;
+    }
+
     private void FixedUpdate()
     {
         EffectuerMouvement();
+        EffectuerRotation();
     }
 
     private void EffectuerMouvement()
@@ -27,5 +35,10 @@ public class Player_Movements : MonoBehaviour
         {
             rb.MovePosition(rb.position + vecVelocite * Time.fixedDeltaTime);
         }
+    }
+
+    private void EffectuerRotation()
+    {
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(vecRotation));
     }
 }
