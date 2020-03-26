@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5726b8be941606d4cb8611732d0adb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fVitesse: 1
+  fVitesse: 10
   fSensibiliteRegard: 3
   fSensibiliteCamera: 2
 --- !u!114 &3830904573028512511
