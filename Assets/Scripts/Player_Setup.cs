@@ -2,6 +2,8 @@
 //using UnityEngine.Networking;
 using Mirror; //Unet étant déprécié, Mirror le remplace.
 
+[RequireComponent(typeof(Player))] //Pour être sûr on demande d'avoir notre composant joueur pour éviter les erreurs.
+
 public class Player_Setup : NetworkBehaviour
 //BUT : Lorsqu'un joueur apparait, désactiver les contrôles, caméras et audios des autres joueurs.
 //ENTREE : Les scripts de contrôle et les caméras des autres joueurs à désactiver.
@@ -30,13 +32,14 @@ public class Player_Setup : NetworkBehaviour
                 Main_Camera.gameObject.SetActive(false);
             }
         }
-        EnregistrerJoueur();
     }
 
-    private void EnregistrerJoueur() //Penser à plus tard enregistrer les joueurs dans un dictionnaire. 
+    public override void OnStartClient() //Lorsqu'un joueur est instancié sur le serveur.
     {
-        string IDPlayer = "Joueur " + GetComponent<NetworkIdentity>().netId;
-        transform.name = IDPlayer;
+        base.OnStartClient();//Cette ligne est là par défaut et doit y rester.
+        string sIDnet = GetComponent<NetworkIdentity>().netId.ToString();
+        Player pJoueur = GetComponent<Player>();
+        GameManager.EnregistrerJoueur(sIDnet,pJoueur); //On ajoute notre joueur à notre dictionnaire.
     }
 
     private void DesactiverComposants()
@@ -58,5 +61,7 @@ public class Player_Setup : NetworkBehaviour
         {
             Main_Camera.gameObject.SetActive(true);
         }
+
+        GameManager.DesenregisterJoueur(transform.name);
     }
 }

@@ -2,6 +2,7 @@
 using Mirror;
 
 public class Player_Shoot : NetworkBehaviour
+//Gestion des tirs des joueurs.
 {
     public Player_Weapon arme;
 
@@ -40,14 +41,17 @@ public class Player_Shoot : NetworkBehaviour
             Debug.Log("Objet touché : " + touche.collider.name); //Cette information est envoyée dans la console locale (donc pas sur le serveur).
             if(touche.collider.tag=="Player")
             {
-                CmdTirJoueur(touche.collider.name); //Cette information est envoyée dans la console serveur, car comprise dans une fonction command.
+                CmdTirJoueur(touche.collider.name, arme.nDommage); //Cette information est envoyée dans la console serveur, car comprise dans une fonction command.
             }
         }
     }
 
     [Command] //On assigne cette fonction en tant que fonction serveur.
-    private void CmdTirJoueur (string IDJoueur)
+    private void CmdTirJoueur (string IDJoueur, int nDommage)
     {
-        Debug.Log(IDJoueur + " a été touché.");
+        Debug.Log(IDJoueur + " a été touché pour ."+nDommage+" dégâts");
+
+        Player pJoueur = GameManager.GetPlayer(IDJoueur);
+        pJoueur.DegatInflige(nDommage);
     }
 }
