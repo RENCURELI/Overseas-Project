@@ -7,5 +7,5 @@ public class Player_Weapon : MonoBehaviour
 {
     public string sNomArme = "Base";
     public int nDommage = 10;
-    public float fPortee = 100f;
+    public float fPortee = 100f; //A voir si on la garde.
 }
