@@ -32,6 +32,7 @@ public class Player_Setup : NetworkBehaviour
                 Main_Camera.gameObject.SetActive(false);
             }
         }
+        GetComponent<Player>().Setup();
     }
 
     public override void OnStartClient() //Lorsqu'un joueur est instancié sur le serveur.

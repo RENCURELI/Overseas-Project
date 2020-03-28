@@ -4,6 +4,25 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 //Premier jet pour un GameManager pour stocker les joueurs en jeu et partager les informations.
 {
+    public static GameManager Instance;
+
+    public MatchSettings matchSettings;
+
+    private void Awake()
+    {
+        if(Instance!=null)
+        {
+            Debug.LogError("Erreur : Plus d'un GameManager dans la scène.");
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    #region Player Tracking
+    //Ajout d'une région pour alléger l'affichage du code.
+
     private const string PREFIX_ID_JOUEUR = "Player ";
 
     private static Dictionary<string, Player> players = new Dictionary<string, Player>(); //On crée un dictionnaire pour stocker les joueurs.
@@ -39,4 +58,7 @@ public class GameManager : MonoBehaviour
         GUILayout.EndVertical();
         GUILayout.EndArea();
     }
+    #endregion
+
+
 }

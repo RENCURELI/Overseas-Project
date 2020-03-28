@@ -52,6 +52,6 @@ public class Player_Shoot : NetworkBehaviour
         Debug.Log(IDJoueur + " a été touché pour ."+nDommage+" dégâts");
 
         Player pJoueur = GameManager.GetPlayer(IDJoueur);
-        pJoueur.DegatInflige(nDommage);
+        pJoueur.RpcDegatInflige(nDommage);
     }
 }

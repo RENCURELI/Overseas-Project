@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sNomArme: Base
-  fDommage: 10
+  nDommage: 10
   fPortee: 100
 --- !u!114 &-3787519416118332588
 MonoBehaviour:
@@ -354,3 +354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a40b838e7f26d4eae90996860cc2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  maxVie: 100
+  bDesactiveMort:
+  - {fileID: 3830904573028512510}
+  - {fileID: 5487518018833570917}
