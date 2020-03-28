@@ -9,6 +9,8 @@ public class Player_Controller : MonoBehaviour
     private float fSensibiliteRegard = 3f; //Pour la sensibilité de la souris tourner le joueur.
     [SerializeField]
     private float fSensibiliteCamera = 2f; //Pour la sensibilité de la souris pour orienter la camera.
+    [SerializeField]
+    private float fForceSaut = 300f; //Pour la force du saut.
 
     private Player_Movements sMouvement; //sMouvement pour une variable mouvement de type script
 
@@ -47,8 +49,20 @@ public class Player_Controller : MonoBehaviour
         //Rotation selon X pour la caméra.
         float fRotationX = Input.GetAxisRaw("Mouse Y");
 
-        Vector3 vRotationCamera = new Vector3(fRotationX, 0, 0) * fSensibiliteCamera;
+        float vRotationCameraX = fRotationX * fSensibiliteCamera;
 
-        sMouvement.RotationCamera(vRotationCamera);
+        sMouvement.RotationCamera(vRotationCameraX);
+
+        //Gestion de la force du saut.
+        Vector3 vForceSaut = Vector3.zero;
+        if (Input.GetButton("Jump")) //Input jump exist dans unity
+        {
+            vForceSaut = Vector3.up *fForceSaut;
+            Debug.Log(Vector3.up);
+            Debug.Log(fForceSaut);
+            Debug.Log(Vector3.up* fForceSaut);
+        }
+        //Appliquer la force du saut.
+        sMouvement.Saut(vForceSaut);
     }
 }

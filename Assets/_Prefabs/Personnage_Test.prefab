@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3830904573635396269}
   - component: {fileID: 3830904573635396271}
   - component: {fileID: 3830904573635396270}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,9 +102,11 @@ GameObject:
   - component: {fileID: -110914672524051822}
   - component: {fileID: 289577919208928484}
   - component: {fileID: -1557881933427960395}
-  m_Layer: 0
+  - component: {fileID: 5487518018833570917}
+  - component: {fileID: -5187458838801858066}
+  m_Layer: 8
   m_Name: Personnage_Test
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,6 +217,7 @@ MonoBehaviour:
   fVitesse: 1
   fSensibiliteRegard: 3
   fSensibiliteCamera: 2
+  fForceSaut: 300
 --- !u!114 &3830904573028512511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camJoueur: {fileID: 3830904573635396271}
+  fLimiteRotationCamera: 75
 --- !u!114 &-7859456471680243372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +266,8 @@ MonoBehaviour:
   - {fileID: 3830904573028512510}
   - {fileID: 3830904573635396271}
   - {fileID: 3830904573635396270}
+  - {fileID: 5487518018833570917}
+  NomLayerAutre: RemotePlayer
 --- !u!114 &289577919208928484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,3 +307,37 @@ MonoBehaviour:
   localScaleSensitivity: 0.01
   compressRotation: 1
   target: {fileID: 3829622311386286903}
+--- !u!114 &5487518018833570917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3832230317570239725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a4e9e710d47d114bb0fa593f3c106a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  arme: {fileID: -5187458838801858066}
+  cam: {fileID: 3830904573635396271}
+  mask:
+    serializedVersion: 2
+    m_Bits: 513
+--- !u!114 &-5187458838801858066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3832230317570239725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 032d2d1ae9612a149a99e79649cb8dcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sNomArme: Base
+  fDommage: 10
+  fPortee: 100

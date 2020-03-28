@@ -10,7 +10,12 @@ public class Player_Movements : MonoBehaviour
 
     private Vector3 vecVelocite; // vec et pas v pour avoir un nom différent de sa référence.
     private Vector3 vecRotation;
-    private Vector3 vecRotationCamera;
+    private Vector3 vecForceSaut;
+    private float fRotationCameraX=0f;
+    private float fRotationActuelleCamerax = 0f;
+
+    [SerializeField]
+    private float fLimiteRotationCamera = 75f;
 
     private Rigidbody rb;
 
@@ -30,9 +35,14 @@ public class Player_Movements : MonoBehaviour
         vecRotation = vRotation;
     }
 
-    public void RotationCamera(Vector3 vRotationCamera)
+    public void RotationCamera(float vRotationCameraX)
     {
-        vecRotationCamera = vRotationCamera;
+        fRotationCameraX = vRotationCameraX;
+    }
+
+    public void Saut(Vector3 vForceSaut)
+    {
+        vecForceSaut = vForceSaut;
     }
 
     private void FixedUpdate()
@@ -47,11 +57,22 @@ public class Player_Movements : MonoBehaviour
         {
             rb.MovePosition(rb.position + vecVelocite * Time.fixedDeltaTime);
         }
+        if(vecForceSaut!= Vector3.zero && rb.position.y<=0.51)
+        {
+            rb.AddForce(vecForceSaut * Time.fixedDeltaTime, ForceMode.Impulse);
+        }
     }
 
     private void EffectuerRotation()
     {
+        //Récupération de la rotation + limite de la rotation.
         rb.MoveRotation(rb.rotation * Quaternion.Euler(vecRotation));
-        camJoueur.transform.Rotate(-vecRotationCamera);
+        fRotationActuelleCamerax -= fRotationCameraX;
+        fRotationActuelleCamerax = Mathf.Clamp(fRotationActuelleCamerax, -fLimiteRotationCamera, fLimiteRotationCamera);
+
+        //Application de la rotation.
+        camJoueur.transform.localEulerAngles = new Vector3(fRotationActuelleCamerax, 0f, 0f);
     }
+
+
 }
