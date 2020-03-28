@@ -22,7 +22,13 @@ public class Player_Capture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (captureBy == "1")
+        {
+            GetComponent<MeshRenderer>().material.color = Color.red; 
+        } else if (captureBy == "2")
+        {
+            GetComponent<MeshRenderer>().material.color = Color.blue;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
