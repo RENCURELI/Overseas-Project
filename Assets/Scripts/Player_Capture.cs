@@ -1,22 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 
 public class Player_Capture : MonoBehaviour
 {
     GameObject currentCapturer = null;
     GameObject potentialCapturer = null;
+    
 
     bool isCapturable = true;
     string captureBy = "None";
     int captureTime = 0;
     [SerializeField] int captureTimeNeeded = 500;
+    public Slider slider;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -24,14 +28,34 @@ public class Player_Capture : MonoBehaviour
     {
         if (captureBy == "1")
         {
-            GetComponent<MeshRenderer>().material.color = Color.red; 
+            GetComponent<MeshRenderer>().material.color = Color.red;
+            slider.transform.GetChild(0).GetComponent<Image>().color = Color.red;
         } else if (captureBy == "2")
         {
             GetComponent<MeshRenderer>().material.color = Color.blue;
+            slider.transform.GetChild(0).GetComponent<Image>().color = Color.blue;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    void FixedUpdate()
+    {
+        if (currentCapturer != null)
+        {
+            if (currentCapturer.GetComponent<NetworkIdentity>().netId.ToString() == "1")
+            {
+                slider.transform.GetChild(1).GetComponentInChildren<Image>().color = Color.red;
+            }
+            else
+            {
+                slider.transform.GetChild(1).GetComponentInChildren<Image>().color = Color.blue;
+            }
+        }
+
+        slider.value = captureTime;
+    }
+
+    void OnCollisionEnter(Collision collision)
     {
        if (currentCapturer == null)
         {
@@ -42,7 +66,7 @@ public class Player_Capture : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
         if (isCapturable && (captureBy != currentCapturer.GetComponent<NetworkIdentity>().netId.ToString() ))
         {
@@ -52,11 +76,11 @@ public class Player_Capture : MonoBehaviour
         {
             captureBy = currentCapturer.GetComponent<NetworkIdentity>().netId.ToString();
             Debug.Log("Capturé par : "+currentCapturer.name+" : "+captureBy);
-            captureTime = 0;
+            captureTime = 0;  
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
        if (collision.gameObject == currentCapturer)
         {

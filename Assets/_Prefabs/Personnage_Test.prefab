@@ -216,8 +216,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fVitesse: 10
-  fSensibiliteRegard: 3
-  fSensibiliteCamera: 2
+  fSensibiliteRegard: 30
+  fSensibiliteCamera: 30
   fForceSaut: 300
 --- !u!114 &3830904573028512511
 MonoBehaviour:
@@ -323,6 +323,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   arme: {fileID: -5187458838801858066}
+  bulletPrefab: {fileID: 6220824340437484010, guid: 35e9e460a28b94d49acd922e79913264,
+    type: 3}
   cam: {fileID: 3830904573635396271}
   mask:
     serializedVersion: 2
