@@ -10,7 +10,7 @@ public class Player_Setup : NetworkBehaviour
 //SORTIE : Les composants non désirés désactivés.
 {
     [SerializeField]
-    Behaviour[] composantDesactivable; //On place les scripts et composants à désactiver ici depuis unity.
+    Behaviour[] composantDesactivable=null; //On place les scripts et composants à désactiver ici depuis unity.
 
     [SerializeField] //Pour pouvoir choisir quel Layer on assigne aux autres joueurs.
     private string NomLayerAutre = "RemotePlayer";
@@ -31,6 +31,7 @@ public class Player_Setup : NetworkBehaviour
             {
                 Main_Camera.gameObject.SetActive(false);
             }
+            GetComponent<MeshRenderer>().enabled = false;
         }
         GetComponent<Player>().Setup();
     }

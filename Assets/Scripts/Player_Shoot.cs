@@ -7,10 +7,10 @@ public class Player_Shoot : NetworkBehaviour
     public Player_Weapon arme;
 
     [SerializeField]
-    private Camera cam; //On fait le tir depuis le centre de la caméra du joueur.
+    private Camera cam=null; //On fait le tir depuis le centre de la caméra du joueur.
 
     [SerializeField]
-    private LayerMask mask; //Pour stocker les layers touchables avec les tirs.
+    private LayerMask mask=default; //Pour stocker les layers touchables avec les tirs.
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +37,7 @@ public class Player_Shoot : NetworkBehaviour
         RaycastHit touche;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out touche, arme.fPortee, mask))
         {
+            Debug.DrawLine(cam.transform.position, touche.point, Color.red, 5f);
             //Si on touche quelque chose, notre RaycasHit touche contient toutes les infos de ce qu'on a touché.
             Debug.Log("Objet touché : " + touche.collider.name); //Cette information est envoyée dans la console locale (donc pas sur le serveur).
             if(touche.collider.tag=="Player")

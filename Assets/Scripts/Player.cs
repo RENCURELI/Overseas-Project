@@ -18,7 +18,7 @@ public class Player : NetworkBehaviour
     private int nVieActuelle;
 
     [SerializeField]
-    private Behaviour[] bDesactiveMort;
+    private Behaviour[] bDesactiveMort=null;
     private bool[] bEtaitActif;
 
     public void Setup()
