@@ -15,6 +15,10 @@ public class Player_Setup : NetworkBehaviour
     [SerializeField] //Pour pouvoir choisir quel Layer on assigne aux autres joueurs.
     private string NomLayerAutre = "RemotePlayer";
 
+    [SerializeField]
+    private GameObject JoueurUIPrefab;
+    private GameObject JoueurUIInstance;
+
     Camera Main_Camera; //On récupère également la caméra principale pour la désactiver quand le joueur apparait, ou la réactiver quand il disparait.
 
     private void Start()
@@ -32,6 +36,9 @@ public class Player_Setup : NetworkBehaviour
                 Main_Camera.gameObject.SetActive(false);
             }
             GetComponent<MeshRenderer>().enabled = false;
+            //Création de l'UI du Joueur.
+            JoueurUIInstance = Instantiate(JoueurUIPrefab);
+            JoueurUIInstance.name = JoueurUIPrefab.name;
         }
         GetComponent<Player>().Setup();
     }
@@ -59,6 +66,7 @@ public class Player_Setup : NetworkBehaviour
 
     private void OnDisable()    //Si le joueur se déconnecte il a quand même la caméra globale lancée
     {                           //Note : Ce sera sans doute remplacé plus tard par l'écran de connexion.
+        Destroy(JoueurUIInstance);
         if(Main_Camera!=null)
         {
             Main_Camera.gameObject.SetActive(true);
