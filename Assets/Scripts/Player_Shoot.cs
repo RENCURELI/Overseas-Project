@@ -28,6 +28,7 @@ public class Player_Shoot : NetworkBehaviour
         if (Input.GetButtonDown("Fire1")) //Fire1 est le clique gauche de la souris.
         {
             TirProjectile();
+            Tir();
         }
     }
 
@@ -58,7 +59,7 @@ public class Player_Shoot : NetworkBehaviour
     }
 
     [Command] //On assigne cette fonction en tant que fonction serveur.
-    private void CmdTirJoueur (string IDJoueur, int nDommage)
+    public void CmdTirJoueur (string IDJoueur, int nDommage)
     {
         Debug.Log(IDJoueur + " a été touché pour ."+nDommage+" dégâts");
 

@@ -5,9 +5,10 @@ using Mirror;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed = 30f;
     public float lifeDuration = 2f;
     private float lifeTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,4 +28,5 @@ public class Bullet : MonoBehaviour
             
         }
     }
+
 }
