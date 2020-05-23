@@ -55,12 +55,12 @@ public class Player_Controller : MonoBehaviour
 
         //Gestion de la force du saut.
         Vector3 vForceSaut = Vector3.zero;
-        if (Input.GetButton("Jump")) //Input jump exist dans unity
+        if (Input.GetButton("Jump")) //Input jump existe dans unity
         {
             vForceSaut = Vector3.up *fForceSaut;
-            Debug.Log(Vector3.up);
+            /*Debug.Log(Vector3.up);
             Debug.Log(fForceSaut);
-            Debug.Log(Vector3.up* fForceSaut);
+            Debug.Log(Vector3.up* fForceSaut);*/
         }
         //Appliquer la force du saut.
         sMouvement.Saut(vForceSaut);
