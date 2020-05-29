@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 //using UnityEngine.Networking;
 using Mirror; //Unet étant déprécié, Mirror le remplace.
 
@@ -39,6 +40,17 @@ public class Player_Setup : NetworkBehaviour
             //Création de l'UI du Joueur.
             JoueurUIInstance = Instantiate(JoueurUIPrefab);
             JoueurUIInstance.name = JoueurUIPrefab.name;
+
+            //Configuration de l'UI
+            UiJoueurScript ui = JoueurUIInstance.GetComponent<UiJoueurScript>();
+            if (ui == null)
+            {
+                Debug.LogError("Problème, pas de composant UI correct.");
+            }
+            else
+            {
+                ui.SetScripteJoueur(GetComponent<Player>());
+            }
         }
         GetComponent<Player>().Setup();
     }

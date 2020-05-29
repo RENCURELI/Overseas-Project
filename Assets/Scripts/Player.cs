@@ -21,6 +21,7 @@ public class Player : NetworkBehaviour
     private Behaviour[] bDesactiveMort=null;
     private bool[] bEtaitActif;
 
+
     public void Setup()
     {
         bEtaitActif = new bool[bDesactiveMort.Length]; //on enregistre si le script était actif ou non avant la mort.
@@ -31,6 +32,7 @@ public class Player : NetworkBehaviour
 
         SetDefaults();
     }
+
 
     //Cette fonction Update sera retirée lors de la release pour l'instant cela permet de se suicider en appuyant sur "k"
     private void Update()
@@ -43,6 +45,11 @@ public class Player : NetworkBehaviour
         {
             RpcDegatInflige(9999);
         }
+    }
+
+    public int GetVieJoueur()
+    {
+        return nVieActuelle;
     }
 
     [ClientRpc]

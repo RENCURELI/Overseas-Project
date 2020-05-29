@@ -14,6 +14,7 @@ public class Player_Controller : MonoBehaviour
 
     private Player_Movements sMouvement; //sMouvement pour une variable mouvement de type script
 
+
     //A priori je nommerais mes scripts et objets supérieurs en anglais et les composants internes aux scripts en français.
 
     private void Start()
