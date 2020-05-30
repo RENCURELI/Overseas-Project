@@ -5,7 +5,7 @@ using Mirror;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 30f;
+    public float speed = 100f;
     public float lifeDuration = 2f;
     private float lifeTimer;
 

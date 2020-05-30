@@ -9,13 +9,11 @@ public class Player_Capture : MonoBehaviour
     GameObject currentCapturer = null;
     GameObject potentialCapturer = null;
     
-
     bool isCapturable = true;
     string captureBy = "None";
     int captureTime = 0;
     [SerializeField] int captureTimeNeeded = 500;
     public Slider slider;
-
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +32,11 @@ public class Player_Capture : MonoBehaviour
         {
             GetComponent<MeshRenderer>().material.color = Color.blue;
             slider.transform.GetChild(0).GetComponent<Image>().color = Color.blue;
+        }
+
+        if (currentCapturer != null && currentCapturer.GetComponent<Rigidbody>().IsSleeping())
+        {
+            currentCapturer.GetComponent<Rigidbody>().WakeUp();
         }
     }
 
@@ -65,9 +68,10 @@ public class Player_Capture : MonoBehaviour
             potentialCapturer = collision.gameObject;
         }
     }
-
+    
     void OnCollisionStay(Collision collision)
     {
+        collision.gameObject.GetComponent<Rigidbody>().WakeUp();
         if (isCapturable && (captureBy != currentCapturer.GetComponent<NetworkIdentity>().netId.ToString() ))
         {
             captureTime++;
@@ -79,7 +83,7 @@ public class Player_Capture : MonoBehaviour
             captureTime = 0;  
         }
     }
-
+    
     void OnCollisionExit(Collision collision)
     {
        if (collision.gameObject == currentCapturer)

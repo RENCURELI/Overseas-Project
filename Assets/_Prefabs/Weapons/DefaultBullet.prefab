@@ -109,7 +109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   lifeDuration: 2
-  playerShooter: 
 --- !u!114 &9157387320123242194
 MonoBehaviour:
   m_ObjectHideFlags: 0
