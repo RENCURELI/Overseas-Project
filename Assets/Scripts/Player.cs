@@ -75,7 +75,7 @@ public class Player : NetworkBehaviour
         {
             col.enabled = true;
         }
-
+        
         Debug.Log(transform.name + " est mort.");
 
         //Appeler la fonction de respawn.

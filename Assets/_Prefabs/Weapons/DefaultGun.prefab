@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032d2d1ae9612a149a99e79649cb8dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sNomArme: Base
+  sNomArme: DefaultGun
   nDommage: 10
   fPortee: 100
+  pickable: {fileID: 3920403699288785673, guid: 9b499b7efe07e904993d483a8c959fb7,
+    type: 3}

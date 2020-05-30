@@ -5,7 +5,8 @@
 public class Player_Weapon : MonoBehaviour
 //Création d'une classe de base pour les armes.
 {
-    public string sNomArme = "Base";
+    public string sNomArme = "DefaultGun";
     public int nDommage = 10;
     public float fPortee = 100f; //A voir si on la garde.
+    public GameObject pickable;
 }
