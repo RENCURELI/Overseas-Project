@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2df2caddf6eb40a478f567357e086000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!114 &-7298369809201887654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53a58babe50b8f4585df4e82915a9e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!23 &3852830257685399115
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -416,6 +420,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3830904573635396269}
     m_Modifications:
+    - target: {fileID: 836432298888522513, guid: f6865379bf21d064aadefdd42695bcf9,
+        type: 3}
+      propertyPath: pickable
+      value: 
+      objectReference: {fileID: 1703280547319165439, guid: 41edc4b265848a0439c5cafa85a132b9,
+        type: 3}
     - target: {fileID: 2413809471056727050, guid: f6865379bf21d064aadefdd42695bcf9,
         type: 3}
       propertyPath: m_AssetId

@@ -14,6 +14,8 @@ public class Player_Movements : MonoBehaviour
     private float fRotationCameraX=0f;
     private float fRotationActuelleCamerax = 0f;
 
+    private bool bSautPossible = true;
+
     [SerializeField]
     private float fLimiteRotationCamera = 75f;
 
@@ -57,9 +59,10 @@ public class Player_Movements : MonoBehaviour
         {
             rb.MovePosition(rb.position + vecVelocite * Time.fixedDeltaTime);
         }
-        if(vecForceSaut!= Vector3.zero && rb.position.y<=0.51)
+        if(vecForceSaut!= Vector3.zero && bSautPossible) //C'est ici qu'on modifie pour le saut.
         {
             rb.AddForce(vecForceSaut * Time.fixedDeltaTime, ForceMode.Impulse);
+            bSautPossible = false;
         }
     }
 
@@ -74,5 +77,26 @@ public class Player_Movements : MonoBehaviour
         camJoueur.transform.localEulerAngles = new Vector3(fRotationActuelleCamerax, 0f, 0f);
     }
 
+    /*void OnCollisionExit(Collision AutreObjet)
+    {
+        bSautPossible = false; //Lorsqu'on ne touche plus notre sol, on ne peut plus sauter.
+        Debug.Log("Fin de collision.");
+    }*/
 
+    void OnCollisionEnter(Collision AutreObjet)
+    {
+        Debug.Log("Points colliding: " + AutreObjet.contacts.Length);
+        Debug.Log("First normal of the point that collide: " + AutreObjet.contacts[0].normal);
+        if (bSautPossible != true)
+        {
+            for (int nI = 0; nI < AutreObjet.contactCount; nI++)
+            {
+                if (AutreObjet.contacts[nI].normal.y >= 0.9) //Si l'on se cogne à un objet dont la normal est comprise entre 0.9 et 1 on peut sauter.
+                {
+                    bSautPossible = true; //Avec une boîte de collision rectangulaire ça ne fait que 4 points. Si on change la boite à revoir.
+                    Debug.Log("Collision avec le sol.");
+                }
+            }
+        }
+    } 
 }

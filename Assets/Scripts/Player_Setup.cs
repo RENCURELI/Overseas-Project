@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 //using UnityEngine.Networking;
 using Mirror; //Unet étant déprécié, Mirror le remplace.
 
@@ -16,7 +17,7 @@ public class Player_Setup : NetworkBehaviour
     private string NomLayerAutre = "RemotePlayer";
 
     [SerializeField]
-    private GameObject JoueurUIPrefab;
+    private GameObject JoueurUIPrefab=null;
     private GameObject JoueurUIInstance;
 
     Camera Main_Camera; //On récupère également la caméra principale pour la désactiver quand le joueur apparait, ou la réactiver quand il disparait.
@@ -39,6 +40,17 @@ public class Player_Setup : NetworkBehaviour
             //Création de l'UI du Joueur.
             JoueurUIInstance = Instantiate(JoueurUIPrefab);
             JoueurUIInstance.name = JoueurUIPrefab.name;
+
+            //Configuration de l'UI
+            UiJoueurScript ui = JoueurUIInstance.GetComponent<UiJoueurScript>();
+            if (ui == null)
+            {
+                Debug.LogError("Problème, pas de composant UI correct.");
+            }
+            else
+            {
+                ui.SetScripteJoueur(GetComponent<Player>());
+            }
         }
         GetComponent<Player>().Setup();
     }
@@ -65,7 +77,8 @@ public class Player_Setup : NetworkBehaviour
     }
 
     private void OnDisable()    //Si le joueur se déconnecte il a quand même la caméra globale lancée
-    {                           //Note : Ce sera sans doute remplacé plus tard par l'écran de connexion.
+    {                           
+        //Note : Ce sera sans doute remplacé plus tard par l'écran de connexion.
         Destroy(JoueurUIInstance);
         if(Main_Camera!=null)
         {
