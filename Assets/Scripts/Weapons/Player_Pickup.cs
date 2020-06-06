@@ -8,7 +8,7 @@ public class Player_Pickup : NetworkBehaviour
 
     void OnTriggerStay(Collider collider)
     {
-        if (collider.GetComponentInChildren<Player_Weapon>())
+        if (collider.GetComponent<PickUpWeapon>())
         {
             if ((Input.GetKeyDown(KeyCode.F)))
             {
@@ -21,12 +21,14 @@ public class Player_Pickup : NetworkBehaviour
     [Command]
     public void CmdPickupWeapon(GameObject collider)
     {
-        string weaponName = collider.GetComponentInChildren<Player_Weapon>().sNomArme;
+        string weaponName = collider.gameObject.GetComponent<PickUpWeapon>().arme.sNomArme;
         transform.GetChild(0).Find(weaponName).gameObject.SetActive(true);
         GetComponent<Player_Shoot>().arme = transform.GetChild(0).Find(weaponName).GetComponent<Player_Weapon>();
         NetworkServer.UnSpawn(collider.gameObject);
         Destroy(collider.gameObject);
-        RpcSyncPickup(weaponName);
+
+            RpcSyncPickup(weaponName);
+        
     }
 
     [ClientRpc]
@@ -34,5 +36,7 @@ public class Player_Pickup : NetworkBehaviour
     {
         transform.GetChild(0).Find(weaponName).gameObject.SetActive(true);
         GetComponent<Player_Shoot>().arme = transform.GetChild(0).Find(weaponName).GetComponent<Player_Weapon>();
+        GetComponent<Player_Switch>().playerWeapon.Add(weaponName);
+        GetComponent<Player_Switch>().selectedWeapon++;
     }
 }

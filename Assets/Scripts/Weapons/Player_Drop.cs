@@ -16,18 +16,24 @@ public class Player_Drop : NetworkBehaviour
     [Command]
     public void CmdDropWeapon()
     {
+        Player_Weapon arme = GetComponent<Player_Shoot>().arme;
         Vector3 dropPosition = new Vector3(transform.position.x, 1, transform.position.z);
-        GameObject weaponDropped = Instantiate(GetComponent<Player_Shoot>().arme.pickable, dropPosition, transform.rotation);
+        GameObject weaponDropped = Instantiate(arme.pickable, dropPosition, transform.rotation);
         NetworkServer.Spawn(weaponDropped);
-        transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        GetComponent<Player_Switch>().playerWeapon.Remove(arme.sNomArme);
+        transform.GetChild(0).Find(arme.sNomArme).gameObject.SetActive(false);
         GetComponent<Player_Shoot>().arme = null;
-        RpcSyncDrop();
+        if (!isLocalPlayer)
+        {
+            RpcSyncDrop();
+        }
     }
 
     [ClientRpc]
     public void RpcSyncDrop()
     {
-        transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(0).Find(GetComponent<Player_Shoot>().arme.sNomArme).gameObject.SetActive(false);
         GetComponent<Player_Shoot>().arme = null;
+        GetComponent<Player_Switch>().playerWeapon.Remove(GetComponent<Player_Shoot>().arme.sNomArme);
     }
 }

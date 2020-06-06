@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using Mirror;
 using System;
+using System.Collections;
 using System.Reflection;
 
 public class Player_Shoot : NetworkBehaviour
 //Gestion des tirs des joueurs.
 {
+    private bool allowFire = true;
     public Player_Weapon arme;
     public GameObject bulletPrefab;
     [SerializeField]
@@ -27,15 +29,16 @@ public class Player_Shoot : NetworkBehaviour
     void Update()
     {
         //On garde le principe d'une arme semi-automatique, on tire les balles une par une pour l'instant.
-        if (Input.GetButtonDown("Fire1") && arme != null) //Fire1 est le clique gauche de la souris.
+        if (Input.GetButton("Fire1") && arme != null && allowFire) //Fire1 est le clique gauche de la souris.
         {
-            Invoke(arme.sNomArme,0);
+            StartCoroutine(arme.sNomArme);
         }
     }
 
     [Client] //On assigne cette fonction en tant que fonction client.
-    public void DefaultGun()
+    public IEnumerator DefaultGun()
     {
+        allowFire = false;
         CmdTirProjectile();
         RaycastHit touche;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out touche, arme.fPortee, mask))
@@ -43,13 +46,19 @@ public class Player_Shoot : NetworkBehaviour
             Debug.DrawLine(cam.transform.position, touche.point, Color.red, 5f);
             //Si on touche quelque chose, notre RaycasHit touche contient toutes les infos de ce qu'on a touché.
             Debug.Log("Objet touché : " + touche.collider.name); //Cette information est envoyée dans la console locale (donc pas sur le serveur).
-            if (touche.collider.tag == "Player")
+            if (touche.collider.CompareTag("Player"))
             {
                 CmdTirJoueur(touche.collider.name, arme.nDommage); //Cette information est envoyée dans la console serveur, car comprise dans une fonction command.
             }
         }
+        yield return new WaitForSeconds(arme.fFirerate);
+        allowFire = true;
+    }
 
-
+    public IEnumerator SubmachineGun()
+    {
+        StartCoroutine(nameof(DefaultGun));
+        yield return null;
     }
 
 

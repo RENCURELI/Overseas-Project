@@ -5,6 +5,6 @@ using Mirror;
 
 public class PickUpWeapon : NetworkBehaviour
 {
-    public GameObject arme;
+    public Player_Weapon arme;
 
 }
