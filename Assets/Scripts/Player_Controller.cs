@@ -6,9 +6,9 @@ public class Player_Controller : MonoBehaviour
     [SerializeField]
     private float fVitesse = 1f; //Note fVitesse pour une variable vitesse de type float
     [SerializeField]
-    private float fSensibiliteRegard = 3f; //Pour la sensibilité de la souris tourner le joueur.
+    private float fSensibiliteRegard = 70f; //Pour la sensibilité de la souris tourner le joueur. //Réglé à 70f par défaut, rotation en Y, à modifier dans le préfab du joueur.
     [SerializeField]
-    private float fSensibiliteCamera = 2f; //Pour la sensibilité de la souris pour orienter la camera.
+    private float fSensibiliteCamera = 50f; //Pour la sensibilité de la souris pour orienter la camera. //Réglé à 50f par défaut, rotation en X, à modifier dans le préfab du joueur.
     [SerializeField]
     private float fForceSaut = 300f; //Pour la force du saut.
 
@@ -42,7 +42,7 @@ public class Player_Controller : MonoBehaviour
         //Rotation selon Y pour tout le joueur.
         float fRotationY = Input.GetAxisRaw("Mouse X"); //Récupération des inputs d'axes par défaut avec l'axe horizontal de la souris.
 
-        Vector3 vRotation = new Vector3(0, fRotationY, 0)* fSensibiliteRegard;
+        Vector3 vRotation = new Vector3(0, fRotationY, 0)* fSensibiliteRegard * Time.deltaTime;
 
         sMouvement.Rotation(vRotation);
 
@@ -50,7 +50,7 @@ public class Player_Controller : MonoBehaviour
         //Rotation selon X pour la caméra.
         float fRotationX = Input.GetAxisRaw("Mouse Y");
 
-        float vRotationCameraX = fRotationX * fSensibiliteCamera;
+        float vRotationCameraX = fRotationX * fSensibiliteCamera * Time.deltaTime;
 
         sMouvement.RotationCamera(vRotationCameraX);
 
@@ -59,9 +59,6 @@ public class Player_Controller : MonoBehaviour
         if (Input.GetButton("Jump")) //Input jump existe dans unity
         {
             vForceSaut = Vector3.up *fForceSaut;
-            /*Debug.Log(Vector3.up);
-            Debug.Log(fForceSaut);
-            Debug.Log(Vector3.up* fForceSaut);*/
         }
         //Appliquer la force du saut.
         sMouvement.Saut(vForceSaut);

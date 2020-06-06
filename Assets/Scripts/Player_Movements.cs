@@ -11,10 +11,20 @@ public class Player_Movements : MonoBehaviour
     private Vector3 vecVelocite; // vec et pas v pour avoir un nom différent de sa référence.
     private Vector3 vecRotation;
     private Vector3 vecForceSaut;
-    private float fRotationCameraX=0f;
+    private float fRotationCameraX = 0f;
     private float fRotationActuelleCamerax = 0f;
 
-    private bool bSautPossible = true;
+    //Gestion du double Saut
+    private float fTempsSautCompteur = 1f; //Valeur actuelle restante pour continuer le saut en maintenant espace.
+    [SerializeField]
+    private float fTempsSaut = 1f; //Valeur du temps max pour le saut.
+    private bool bEnSaut; //Booléen pour savoir si le saut est en cours.
+    [SerializeField]
+    private float fForceSautContinue=1f; //La force que le joueur ajoute en laissant la barre espace appuyée.
+    //Fin Gestion du double Saut.
+
+
+    private bool bSautPossible = false;
 
     [SerializeField]
     private float fLimiteRotationCamera = 75f;
@@ -53,17 +63,48 @@ public class Player_Movements : MonoBehaviour
         EffectuerRotation();
     }
 
+    private void Update()
+    {
+        bSautPossible = SautPossible(); //Vérifie si le saut est possible.
+    }
+
     private void EffectuerMouvement()
     {
-        if (vecVelocite!= Vector3.zero)
+        if (vecVelocite!= Vector3.zero && bSautPossible) //On effectue les mouvements horizontaux si on n'est pas en train de sauter.
         {
             rb.MovePosition(rb.position + vecVelocite * Time.fixedDeltaTime);
         }
-        if(vecForceSaut!= Vector3.zero && bSautPossible) //C'est ici qu'on modifie pour le saut.
+        else if (vecVelocite != Vector3.zero && !bSautPossible) //On ralenti un peu le mouvement si on est en train de sauter, ici de -10%.
+        {
+            rb.MovePosition(rb.position + vecVelocite * 0.9f * Time.fixedDeltaTime);
+        }
+
+        if (vecForceSaut!= Vector3.zero && bSautPossible) //On effectue le saut.
         {
             rb.AddForce(vecForceSaut * Time.fixedDeltaTime, ForceMode.Impulse);
             bSautPossible = false;
+            bEnSaut = true;
+            fTempsSautCompteur = fTempsSaut;
         }
+
+        if (vecForceSaut != Vector3.zero && bEnSaut == true)
+        {
+            if (fTempsSautCompteur>0)
+            {
+                rb.position += transform.up * Time.deltaTime * fForceSautContinue;
+                fTempsSautCompteur -= Time.deltaTime;
+            }
+            else
+            {
+                bEnSaut = false; //Si il ne peut plus sauter, il cesse de gagner en hauteur.
+            }
+        }
+
+        if (vecForceSaut == Vector3.zero) //Le saut n'est plus en cours.
+        {
+            bEnSaut = false;
+        }
+
     }
 
     private void EffectuerRotation()
@@ -77,26 +118,13 @@ public class Player_Movements : MonoBehaviour
         camJoueur.transform.localEulerAngles = new Vector3(fRotationActuelleCamerax, 0f, 0f);
     }
 
-    /*void OnCollisionExit(Collision AutreObjet)
-    {
-        bSautPossible = false; //Lorsqu'on ne touche plus notre sol, on ne peut plus sauter.
-        Debug.Log("Fin de collision.");
-    }*/
 
-    void OnCollisionEnter(Collision AutreObjet)
+    bool SautPossible ()
+    //BUT : Déterminer si un saut est possible.
+    //ENTREE : La position du joueur et un raycast vers le bas d'une longueur de 0.1 unité.
+    //SORTIE : VRAI si le saut est possible et FAUX si il ne l'est pas.
     {
-        Debug.Log("Points colliding: " + AutreObjet.contacts.Length);
-        Debug.Log("First normal of the point that collide: " + AutreObjet.contacts[0].normal);
-        if (bSautPossible != true)
-        {
-            for (int nI = 0; nI < AutreObjet.contactCount; nI++)
-            {
-                if (AutreObjet.contacts[nI].normal.y >= 0.9) //Si l'on se cogne à un objet dont la normal est comprise entre 0.9 et 1 on peut sauter.
-                {
-                    bSautPossible = true; //Avec une boîte de collision rectangulaire ça ne fait que 4 points. Si on change la boite à revoir.
-                    Debug.Log("Collision avec le sol.");
-                }
-            }
-        }
-    } 
+        Vector3 down = transform.TransformDirection(Vector3.down);
+        return Physics.Raycast(transform.position, down, 0.1f); //Renvoie vrai en cas de collisione t faux sinon.
+    }
 }
