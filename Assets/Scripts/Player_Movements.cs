@@ -74,7 +74,7 @@ public class Player_Movements : MonoBehaviour
         {
             rb.MovePosition(rb.position + vecVelocite * Time.fixedDeltaTime);
         }
-        else if (vecVelocite != Vector3.zero && !bSautPossible) //On ralenti un peu le mouvement si on est en train de sauter, ici de -vec10%.
+        else if (vecVelocite != Vector3.zero && !bSautPossible) //On ralenti un peu le mouvement si on est en train de sauter, ici de -10%.
         {
             rb.MovePosition(rb.position + vecVelocite * 0.9f * Time.fixedDeltaTime);
         }
