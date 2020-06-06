@@ -8,29 +8,35 @@ public class Player_Capture : MonoBehaviour
 {
     GameObject currentCapturer = null;
     GameObject potentialCapturer = null;
-    
+
     bool isCapturable = true;
     string captureBy = "None";
     int captureTime = 0;
     [SerializeField] int captureTimeNeeded = 500;
     public Slider slider;
+    private MeshRenderer meshRenderer;
+
+    //A changer avec le système de couleur
+    Player[] players = new Player[2];
 
     // Start is called before the first frame update
     void Start()
     {
-
+        slider.maxValue = captureTimeNeeded;
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (captureBy == "1")
+        //A changer avec le système de couleur
+        if (players[0] != null && captureBy == players[0].netId.ToString())
         {
-            GetComponent<MeshRenderer>().material.color = Color.red;
+            meshRenderer.material.color = Color.red;
             slider.transform.GetChild(0).GetComponent<Image>().color = Color.red;
-        } else if (captureBy == "2")
+        } else if (players[1] != null && captureBy == players[1].netId.ToString())
         {
-            GetComponent<MeshRenderer>().material.color = Color.blue;
+            meshRenderer.material.color = Color.blue;
             slider.transform.GetChild(0).GetComponent<Image>().color = Color.blue;
         }
 
@@ -38,14 +44,16 @@ public class Player_Capture : MonoBehaviour
         {
             currentCapturer.GetComponent<Rigidbody>().WakeUp();
         }
+      
     }
 
 
     void FixedUpdate()
     {
+        //A changer avec le système de couleur
         if (currentCapturer != null)
         {
-            if (currentCapturer.GetComponent<NetworkIdentity>().netId.ToString() == "1")
+            if (currentCapturer.GetComponent<NetworkIdentity>().netId.ToString() == players[0].netId.ToString())
             {
                 slider.transform.GetChild(1).GetComponentInChildren<Image>().color = Color.red;
             }
@@ -60,7 +68,14 @@ public class Player_Capture : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-       if (currentCapturer == null)
+        if (players[0] == null)
+        {
+            players[0] = collision.gameObject.GetComponent<Player>();
+        } else if (players[1] == null && collision.gameObject.GetComponent<Player>() != players[0])
+        {
+            players[1] = collision.gameObject.GetComponent<Player>();
+        } 
+        if (currentCapturer == null)
         {
             currentCapturer = collision.gameObject;
         } else if (currentCapturer != collision.gameObject) {
@@ -79,19 +94,19 @@ public class Player_Capture : MonoBehaviour
         if (captureTime >= captureTimeNeeded)
         {
             captureBy = currentCapturer.GetComponent<NetworkIdentity>().netId.ToString();
-            Debug.Log("Capturé par : "+currentCapturer.name+" : "+captureBy);
+            Debug.Log("Capturé par : "+currentCapturer.name);
             captureTime = 0;  
         }
     }
     
     void OnCollisionExit(Collision collision)
     {
-       if (collision.gameObject == currentCapturer)
-        {
-            currentCapturer = potentialCapturer;
-        }
-        potentialCapturer = null;
-        isCapturable = true;
-        captureTime = 0;
+       if (collision.gameObject == currentCapturer) 
+       {
+            currentCapturer = potentialCapturer; 
+       }
+       potentialCapturer = null;
+       isCapturable = true;
+       captureTime = 0;
     }
 }
