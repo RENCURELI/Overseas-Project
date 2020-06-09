@@ -23,7 +23,7 @@ public class Player_Movements : MonoBehaviour
     private float fForceSautContinue=1f; //La force que le joueur ajoute en laissant la barre espace appuyée.
     //Fin Gestion du double Saut.
 
-
+    [SerializeField]
     private bool bSautPossible = false;
 
     [SerializeField]
@@ -125,6 +125,7 @@ public class Player_Movements : MonoBehaviour
     //SORTIE : VRAI si le saut est possible et FAUX si il ne l'est pas.
     {
         Vector3 down = transform.TransformDirection(Vector3.down);
+        Debug.DrawRay(transform.position,down*30f,Color.red);
         return Physics.Raycast(transform.position, down, 0.1f); //Renvoie vrai en cas de collisione t faux sinon.
     }
 }
