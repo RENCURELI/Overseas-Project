@@ -36,7 +36,7 @@ public class Player_Setup : NetworkBehaviour
             {
                 Main_Camera.gameObject.SetActive(false);
             }
-            GetComponent<MeshRenderer>().enabled = false;
+            DesactiverLesMeshRenderer(GetComponents<SkinnedMeshRenderer>());
             //Création de l'UI du Joueur.
             JoueurUIInstance = Instantiate(JoueurUIPrefab);
             JoueurUIInstance.name = JoueurUIPrefab.name;
@@ -53,6 +53,14 @@ public class Player_Setup : NetworkBehaviour
             }
         }
         GetComponent<Player>().Setup();
+    }
+
+    private void DesactiverLesMeshRenderer(SkinnedMeshRenderer[] TabMesh)
+    {
+        for (int nI=0; nI<TabMesh.Length; nI++)
+        {
+            TabMesh[0].enabled = false;
+        }
     }
 
     public override void OnStartClient() //Lorsqu'un joueur est instancié sur le serveur.
