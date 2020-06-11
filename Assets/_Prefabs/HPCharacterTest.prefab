@@ -2965,6 +2965,7 @@ GameObject:
   - component: {fileID: 1997516645802981527}
   - component: {fileID: 725802334071882173}
   - component: {fileID: 4949621921156943464}
+  - component: {fileID: 7967013036655115408}
   m_Layer: 8
   m_Name: HPCharacterTest
   m_TagString: Untagged
@@ -3185,7 +3186,7 @@ MonoBehaviour:
   - {fileID: 7596489297276456123}
   - {fileID: 8332921907650949900}
   - {fileID: 725802334071882173}
-  - {fileID: 8208616146683094787}
+  - {fileID: 7967013036655115408}
   NomLayerAutre: RemotePlayer
   JoueurUIPrefab: {fileID: 3176709226500562068, guid: f2c0710788bd20a439453e32d4987a47,
     type: 3}
@@ -3257,6 +3258,18 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 1
   animator: {fileID: 8208616146683094787}
+--- !u!114 &7967013036655115408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8208616144951182502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025305eaba9ddea4fa0a614337b3c4ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8208616144951182504
 GameObject:
   m_ObjectHideFlags: 0

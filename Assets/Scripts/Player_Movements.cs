@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Mirror;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Camera))]
@@ -30,6 +31,8 @@ public class Player_Movements : MonoBehaviour
     private float fLimiteRotationCamera = 75f;
 
     private Rigidbody rb;
+
+    private NetworkAnimator Netanim;
 
     private void Start()
     {
