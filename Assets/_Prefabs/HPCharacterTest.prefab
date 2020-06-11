@@ -3190,6 +3190,8 @@ MonoBehaviour:
   NomLayerAutre: RemotePlayer
   JoueurUIPrefab: {fileID: 3176709226500562068, guid: f2c0710788bd20a439453e32d4987a47,
     type: 3}
+  NomLayerNonAffiche: DontDraw
+  GraphismesJoueur: {fileID: 2539005565928777482}
 --- !u!114 &8332921907650949900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5171,7 +5173,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 823
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

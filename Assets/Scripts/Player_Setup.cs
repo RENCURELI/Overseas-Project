@@ -22,6 +22,11 @@ public class Player_Setup : NetworkBehaviour
 
     Camera Main_Camera; //On récupère également la caméra principale pour la désactiver quand le joueur apparait, ou la réactiver quand il disparait.
 
+    [SerializeField]
+    private string NomLayerNonAffiche = "DontDraw";
+    [SerializeField]
+    private GameObject GraphismesJoueur=null;
+
     private void Start()
     {
         if (!isLocalPlayer) //isLocalPlayer est une variable booléenne relative à la classe NetworkBehaviour
@@ -41,6 +46,9 @@ public class Player_Setup : NetworkBehaviour
             JoueurUIInstance = Instantiate(JoueurUIPrefab);
             JoueurUIInstance.name = JoueurUIPrefab.name;
 
+            //Désactiver la partie graphique du joueur local.
+            SetLayerRecursif(GraphismesJoueur, LayerMask.NameToLayer(NomLayerNonAffiche));
+
             //Configuration de l'UI
             UiJoueurScript ui = JoueurUIInstance.GetComponent<UiJoueurScript>();
             if (ui == null)
@@ -53,6 +61,15 @@ public class Player_Setup : NetworkBehaviour
             }
         }
         GetComponent<Player>().Setup();
+    }
+
+    private void SetLayerRecursif(GameObject obj, int Layer)
+    {
+        obj.layer = Layer;
+        foreach (Transform child in obj.transform   )
+        {
+            SetLayerRecursif(child.gameObject, Layer);
+        }
     }
 
     private void DesactiverLesMeshRenderer(SkinnedMeshRenderer[] TabMesh)
