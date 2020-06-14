@@ -10,14 +10,12 @@ public class Player_Capture : MonoBehaviour
     GameObject potentialCapturer = null;
 
     bool isCapturable = true;
-    string captureBy = "None";
+    Color captureBy;
     int captureTime = 0;
     [SerializeField] int captureTimeNeeded = 500;
     public Slider slider;
+    public Text textOnCapture;
     private MeshRenderer meshRenderer;
-
-    //A changer avec le système de couleur
-    Player[] players = new Player[2];
 
     // Start is called before the first frame update
     void Start()
@@ -29,17 +27,6 @@ public class Player_Capture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //A changer avec le système de couleur
-        if (players[0] != null && captureBy == players[0].netId.ToString())
-        {
-            meshRenderer.material.color = Color.red;
-            slider.transform.GetChild(0).GetComponent<Image>().color = Color.red;
-        } else if (players[1] != null && captureBy == players[1].netId.ToString())
-        {
-            meshRenderer.material.color = Color.blue;
-            slider.transform.GetChild(0).GetComponent<Image>().color = Color.blue;
-        }
-
         if (currentCapturer != null && currentCapturer.GetComponent<Rigidbody>().IsSleeping())
         {
             currentCapturer.GetComponent<Rigidbody>().WakeUp();
@@ -53,14 +40,7 @@ public class Player_Capture : MonoBehaviour
         //A changer avec le système de couleur
         if (currentCapturer != null)
         {
-            if (currentCapturer.GetComponent<NetworkIdentity>().netId.ToString() == players[0].netId.ToString())
-            {
-                slider.transform.GetChild(1).GetComponentInChildren<Image>().color = Color.red;
-            }
-            else
-            {
-                slider.transform.GetChild(1).GetComponentInChildren<Image>().color = Color.blue;
-            }
+            slider.transform.GetChild(1).GetComponentInChildren<Image>().color = currentCapturer.GetComponent<Player>().teamColor;
         }
 
         slider.value = captureTime;
@@ -68,13 +48,6 @@ public class Player_Capture : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (players[0] == null)
-        {
-            players[0] = collision.gameObject.GetComponent<Player>();
-        } else if (players[1] == null && collision.gameObject.GetComponent<Player>() != players[0])
-        {
-            players[1] = collision.gameObject.GetComponent<Player>();
-        } 
         if (currentCapturer == null)
         {
             currentCapturer = collision.gameObject;
@@ -87,15 +60,15 @@ public class Player_Capture : MonoBehaviour
     void OnCollisionStay(Collision collision)
     {
         collision.gameObject.GetComponent<Rigidbody>().WakeUp();
-        if (isCapturable && (captureBy != currentCapturer.GetComponent<NetworkIdentity>().netId.ToString() ))
+        if (isCapturable && (captureBy != currentCapturer.GetComponent<Player>().teamColor ))
         {
             captureTime++;
         }
         if (captureTime >= captureTimeNeeded)
         {
-            captureBy = currentCapturer.GetComponent<NetworkIdentity>().netId.ToString();
-            Debug.Log("Capturé par : "+currentCapturer.name);
-            captureTime = 0;  
+            captureBy = currentCapturer.GetComponent<Player>().teamColor;
+            captureTime = 0;
+            CaptureFeedback();
         }
     }
     
@@ -108,5 +81,37 @@ public class Player_Capture : MonoBehaviour
        potentialCapturer = null;
        isCapturable = true;
        captureTime = 0;
+    }
+
+    void CaptureFeedback()
+    {
+        meshRenderer.material.color = captureBy;
+        slider.transform.GetChild(0).GetComponent<Image>().color = captureBy;
+        textOnCapture.text = "Capturé par " + currentCapturer.name;
+        StartCoroutine(FadeTextToFullAlpha(1f, textOnCapture));
+        StartCoroutine(FadeTextToZeroAlpha(1f, textOnCapture));
+    }
+
+   
+    public IEnumerator FadeTextToFullAlpha(float t, Text i)
+    {
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+        while (i.color.a < 1.0f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
+            yield return null;
+        }
+    }
+ 
+    
+    public IEnumerator FadeTextToZeroAlpha(float t, Text i)
+    {
+        yield return new WaitForSeconds(t+1f);
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+        while (i.color.a > 0.0f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+            yield return null;
+        }
     }
 }

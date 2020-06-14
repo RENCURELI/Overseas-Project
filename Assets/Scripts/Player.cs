@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Mirror;
 using System.Collections;
 
@@ -21,6 +22,9 @@ public class Player : NetworkBehaviour
     private Behaviour[] bDesactiveMort=null;
     private bool[] bEtaitActif;
 
+    private static int nbPlayer;
+    public Color teamColor;
+
 
     public void Setup()
     {
@@ -31,6 +35,21 @@ public class Player : NetworkBehaviour
         }
 
         SetDefaults();
+        nbPlayer++;
+        if (nbPlayer % 2 != 1)
+        {
+            teamColor = Color.red;
+        }
+        else
+        {
+            teamColor = Color.blue;
+        }
+        Debug.Log((teamColor.ToString()+" - Nb :"+nbPlayer));
+    }
+
+    private void OnDestroy()
+    {
+        nbPlayer--;
     }
 
 

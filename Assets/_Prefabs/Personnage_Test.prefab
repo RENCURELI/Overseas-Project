@@ -29,8 +29,8 @@ Transform:
   m_LocalPosition: {x: 0.016000003, y: 1.218, z: -0.239}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6962858419860177733}
-  - {fileID: 4065925002443361433}
+  - {fileID: 6175342641696851652}
+  - {fileID: 7586122251163912112}
   m_Father: {fileID: 3829622311386286903}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -181,6 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7168e24a03cca84499f0460b6f4d035c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  selectedWeapon: 0
+  playerWeapon: []
 --- !u!23 &3852830257685399115
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -262,8 +266,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fVitesse: 10
-  fSensibiliteRegard: 70
-  fSensibiliteCamera: 50
+  fSensibiliteRegard: 180
+  fSensibiliteCamera: 150
   fForceSaut: 300
 --- !u!114 &3830904573028512511
 MonoBehaviour:
@@ -278,6 +282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camJoueur: {fileID: 3830904573635396271}
+  fTempsSaut: 1
+  fForceSautContinue: 1
   fLimiteRotationCamera: 75
 --- !u!114 &-7859456471680243372
 MonoBehaviour:
@@ -370,7 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  arme: {fileID: 6784852971864730955}
+  arme: {fileID: 6175342641696851954}
   bulletPrefab: {fileID: 6220824340437484010, guid: 35e9e460a28b94d49acd922e79913264,
     type: 3}
   cam: {fileID: 3830904573635396271}
@@ -407,6 +413,7 @@ MonoBehaviour:
   bDesactiveMort:
   - {fileID: 3830904573028512510}
   - {fileID: 5487518018833570917}
+  teamColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &3213106191488009546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,13 +519,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6865379bf21d064aadefdd42695bcf9, type: 3}
---- !u!4 &6962858419860177733 stripped
+--- !u!4 &6175342641696851652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3824175923078579487, guid: f6865379bf21d064aadefdd42695bcf9,
     type: 3}
   m_PrefabInstance: {fileID: 6175342641696851546}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6784852971864730955 stripped
+--- !u!114 &6175342641696851954 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 836432298888522513, guid: f6865379bf21d064aadefdd42695bcf9,
     type: 3}
@@ -604,7 +611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ead87bc2c854bdc46aac19edecf3978c, type: 3}
---- !u!4 &4065925002443361433 stripped
+--- !u!4 &7586122251163912112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5848558267211172736, guid: ead87bc2c854bdc46aac19edecf3978c,
     type: 3}
