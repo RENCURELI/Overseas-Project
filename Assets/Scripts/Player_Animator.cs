@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
 
 
@@ -14,9 +12,39 @@ public class Player_Animator : MonoBehaviour
         NetAnim = GetComponent<NetworkAnimator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetForward()
     {
-        NetAnim.SetTrigger("Default");
+        NetAnim.SetTrigger("Forward");
+    }
+
+    public void SetBackward()
+    {
+        NetAnim.SetTrigger("Backward");
+    }
+
+    public void SetRight()
+    {
+        NetAnim.SetTrigger("Right");
+    }
+
+    public void SetLeft()
+    {
+        NetAnim.SetTrigger("Left");
+    }
+
+    public void SetDead()
+    {
+        NetAnim.SetTrigger("Die");
+    }
+
+    public void SetJump()
+    {
+        //Debug.Log("Jump");
+        NetAnim.SetTrigger("Jump");
+    }
+
+    public void SetShoot()
+    {
+        NetAnim.SetTrigger("Shoot");
     }
 }

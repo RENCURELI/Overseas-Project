@@ -34,10 +34,13 @@ public class Player_Movements : MonoBehaviour
 
     private NetworkAnimator Netanim;
 
+    Player_Animator Animateur;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         camJoueur = GetComponentInChildren <Camera>();
+        Animateur = gameObject.GetComponent<Player_Animator>();
     }
 
     public void Mouvement(Vector3 vVelocite)
@@ -76,6 +79,14 @@ public class Player_Movements : MonoBehaviour
         if (vecVelocite!= Vector3.zero && bSautPossible) //On effectue les mouvements horizontaux si on n'est pas en train de sauter.
         {
             rb.MovePosition(rb.position + vecVelocite * Time.fixedDeltaTime);
+            if(vecVelocite.x>0f)
+            {
+                Animateur.SetForward();
+            }
+            else
+            {
+                Animateur.SetBackward();
+            }
         }
         else if (vecVelocite != Vector3.zero && !bSautPossible) //On ralenti un peu le mouvement si on est en train de sauter, ici de -10%.
         {

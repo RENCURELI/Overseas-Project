@@ -15,11 +15,14 @@ public class Player_Controller : MonoBehaviour
     private Player_Movements sMouvement; //sMouvement pour une variable mouvement de type script
 
 
+    Player_Animator Animateur;
+
     //A priori je nommerais mes scripts et objets supérieurs en anglais et les composants internes aux scripts en français.
 
     private void Start()
     {
         sMouvement = GetComponent<Player_Movements>();
+        Animateur = gameObject.GetComponent<Player_Animator>();
     }
 
     private void Update()
@@ -56,9 +59,10 @@ public class Player_Controller : MonoBehaviour
 
         //Gestion de la force du saut.
         Vector3 vForceSaut = Vector3.zero;
-        if (Input.GetButton("Jump")) //Input jump existe dans unity
+        if (Input.GetKeyDown("space")) //Input jump existe dans unity
         {
             vForceSaut = Vector3.up *fForceSaut;
+            Animateur.SetJump();
         }
         //Appliquer la force du saut.
         sMouvement.Saut(vForceSaut);

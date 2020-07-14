@@ -16,6 +16,8 @@ public class Player_Shoot : NetworkBehaviour
     [SerializeField]
     private LayerMask mask = default; //Pour stocker les layers touchables avec les tirs.
 
+    Player_Animator Animateur;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class Player_Shoot : NetworkBehaviour
             Debug.LogError("Pas de caméra référencée pour ce joueur.");
             this.enabled = false; //On désactive le script pour éviter les erreurs.
         }
+        Animateur = gameObject.GetComponent<Player_Animator>();
     }
 
     void Update()
@@ -78,6 +81,7 @@ public class Player_Shoot : NetworkBehaviour
 
         GameObject bulletInstance = Instantiate(bulletPrefab, bulletSpawnPos, cam.transform.rotation);
         NetworkServer.Spawn(bulletInstance);
+        Animateur.SetForward();
     }
 }
 
