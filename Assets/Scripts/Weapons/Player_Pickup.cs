@@ -22,21 +22,20 @@ public class Player_Pickup : NetworkBehaviour
     public void CmdPickupWeapon(GameObject collider)
     {
         string weaponName = collider.gameObject.GetComponent<PickUpWeapon>().arme.sNomArme;
-        transform.GetChild(0).Find(weaponName).gameObject.SetActive(true);
+        GetComponent<Player_Switch>().playerWeapon.Add(weaponName);
+        GetComponent<Player_Switch>().CmdSwitchWeapon();
         GetComponent<Player_Shoot>().arme = transform.GetChild(0).Find(weaponName).GetComponent<Player_Weapon>();
         NetworkServer.UnSpawn(collider.gameObject);
         Destroy(collider.gameObject);
-
-            RpcSyncPickup(weaponName);
+        RpcSyncPickup(weaponName);
         
     }
 
     [ClientRpc]
     public void RpcSyncPickup(string weaponName)
     {
-        transform.GetChild(0).Find(weaponName).gameObject.SetActive(true);
-        GetComponent<Player_Shoot>().arme = transform.GetChild(0).Find(weaponName).GetComponent<Player_Weapon>();
         GetComponent<Player_Switch>().playerWeapon.Add(weaponName);
-        GetComponent<Player_Switch>().selectedWeapon++;
+        GetComponent<Player_Switch>().CmdSwitchWeapon();
+        GetComponent<Player_Shoot>().arme = transform.GetChild(0).Find(weaponName).GetComponent<Player_Weapon>();
     }
 }

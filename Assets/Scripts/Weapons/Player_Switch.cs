@@ -19,19 +19,30 @@ public class Player_Switch : NetworkBehaviour
     void Start()
     {
         camT = transform.GetChild(0);
-        playerWeapon.Add("DefaultGun");
+        for (var i=0;i<camT.childCount;i++)
+        {
+            if (camT.GetChild(i).gameObject.activeSelf)
+            {
+                playerWeapon.Add(camT.GetChild(i).name);
+            }
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Lors du scroll de la souris, changement d'arme
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if (playerWeapon.Count > 1)
         {
-            CmdSwitchWeapon();
-        } else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            CmdSwitchWeapon();
+            //Lors du scroll de la souris, changement d'arme
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                CmdSwitchWeapon();
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                CmdSwitchWeapon();
+            }
         }
     }
 
