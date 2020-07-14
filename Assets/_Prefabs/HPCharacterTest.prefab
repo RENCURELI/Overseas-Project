@@ -2071,7 +2071,7 @@ Transform:
   - {fileID: 6318042733376000305}
   - {fileID: 7337483639607014858}
   m_Father: {fileID: 6056501216306872976}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8045915833837739408
 MeshFilter:
@@ -2088,7 +2088,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8059652485018337798}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3145,9 +3145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5726b8be941606d4cb8611732d0adb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fVitesse: 5
-  fSensibiliteRegard: 90
-  fSensibiliteCamera: 70
+  fVitesse: 10
+  fSensibiliteRegard: 180
+  fSensibiliteCamera: 150
   fForceSaut: 250
 --- !u!114 &2098440733946970785
 MonoBehaviour:
@@ -3165,6 +3165,7 @@ MonoBehaviour:
   syncInterval: 0.1
   maxVie: 100
   bDesactiveMort: []
+  teamColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &201508110598855906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3884,7 +3885,6 @@ GameObject:
   - component: {fileID: 8208616144951417032}
   - component: {fileID: 8208616144954362342}
   - component: {fileID: 2381508619286065165}
-  - component: {fileID: 2832890867980110245}
   m_Layer: 8
   m_Name: AssaultRifle
   m_TagString: Untagged
@@ -3906,7 +3906,7 @@ Transform:
   - {fileID: 1618618570597819465}
   - {fileID: 6894097777386553846}
   m_Father: {fileID: 6056501216306872976}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &8208616144954362342
 SkinnedMeshRenderer:
@@ -4032,24 +4032,8 @@ MonoBehaviour:
   nDommage: 10
   fPortee: 100
   fFirerate: 1
-  pickable: {fileID: 0}
---- !u!114 &2832890867980110245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8208616144951182568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 032d2d1ae9612a149a99e79649cb8dcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sNomArme: DefaultGun
-  nDommage: 10
-  fPortee: 100
-  fFirerate: 1
-  pickable: {fileID: 0}
+  pickable: {fileID: 1703280547319165439, guid: 41edc4b265848a0439c5cafa85a132b9,
+    type: 3}
 --- !u!1 &8208616144951182570
 GameObject:
   m_ObjectHideFlags: 0
@@ -5137,8 +5121,8 @@ Transform:
   m_LocalPosition: {x: 0.016000003, y: 1.218, z: -0.239}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8056289556964939302}
   - {fileID: 8208616144951417032}
+  - {fileID: 8056289556964939302}
   m_Father: {fileID: 8208616144951416966}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
